@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/joaoefornazari/junglegaming-todoapp/issues"
   },
-  "homepage": "https://github.com/joaoefornazari/junglegaming-todoapp#readme"
+  "homepage": "https://github.com/joaoefornazari/junglegaming-todoapp#readme",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
