@@ -1,0 +1,20 @@
+{
+  "name": "junglegaming_todoapp",
+  "version": "1.0.0",
+  "description": "A To-Do list web app; also a technical challenge for joining Jungle Gaming as a dev.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Yeah, I'm on.\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaoefornazari/junglegaming-todoapp.git"
+  },
+  "keywords": [],
+  "author": "joaoefornazari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaoefornazari/junglegaming-todoapp/issues"
+  },
+  "homepage": "https://github.com/joaoefornazari/junglegaming-todoapp#readme"
+}
