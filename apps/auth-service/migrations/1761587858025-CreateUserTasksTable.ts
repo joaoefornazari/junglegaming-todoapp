@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
 export class CreateUserTasksTable1761587858025 implements MigrationInterface {
 
@@ -20,11 +20,29 @@ export class CreateUserTasksTable1761587858025 implements MigrationInterface {
                 ]
             })
         )
+        
+        await queryRunner.createForeignKeys("user_tasks", [
+            new TableForeignKey({
+                columnNames: ["user_id"],
+                referencedColumnNames: ["id"],
+                referencedTableName: "users",
+                onDelete: "CASCADE"
+            }),
+            new TableForeignKey({
+                columnNames: ["task_id"],
+                referencedColumnNames: ["id"],
+                referencedTableName: "tasks",
+                onDelete: "CASCADE"
+            })
+        ])
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         const table = await queryRunner.getTable("user_tasks")
         if (table) {
+            await queryRunner.dropForeignKeys("user_tasks", table.foreignKeys)
+            await queryRunner.dropColumn("user_tasks", "user_id")
+            await queryRunner.dropColumn("user_tasks", "task_id")
             await queryRunner.dropTable("user_tasks")
         }
     }
