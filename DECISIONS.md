@@ -11,4 +11,6 @@
 
 2. O banco seguirá até a 3ª Forma Normal (FN). Referência: [link](https://www.datacamp.com/pt/tutorial/third-normal-form)
 
-3. 
+3. Criei uma tabela `user_tasks` que é uma entidade associativa que vai armazenar apenas o ID do usuário e o ID da tarefa que foi atribuída a ele. Desta forma, tarefas podem ser atribuídas a vários usuários sem usar uma única coluna na tabela `tasks` ou `users`, não tendo "desvio de função" e seguindo a 3ª FN.
+
+4. 
