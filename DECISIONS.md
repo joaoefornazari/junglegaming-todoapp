@@ -13,4 +13,6 @@
 
 3. Criei uma tabela `user_tasks` que é uma entidade associativa que vai armazenar apenas o ID do usuário e o ID da tarefa que foi atribuída a ele. Desta forma, tarefas podem ser atribuídas a vários usuários sem usar uma única coluna na tabela `tasks` ou `users`, não tendo "desvio de função" e seguindo a 3ª FN.
 
-4. 
+4. A tabela `comments` será vinculada a um único `user` e a uma única `task`, e caso a `task` ou o `user` deixem de existir, o `comment` também deixa de existir, pela praticidade de se implementar este comportamento em vez de preservar os comentários mesmo que o usuário tenha sido removido.
+
+5. 
