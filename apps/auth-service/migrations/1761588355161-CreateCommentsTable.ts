@@ -20,6 +20,11 @@ export class CreateCommentsTable1761588355161 implements MigrationInterface {
                         isNullable: false,
                     },
                     {
+                        name: "task_id",
+                        type: "int",
+                        isNullable: false,
+                    },
+                    {
                         name: "content",
                         type: "text",
                         isNullable: false,
@@ -28,13 +33,21 @@ export class CreateCommentsTable1761588355161 implements MigrationInterface {
             })
         )
 
-        await queryRunner.createForeignKey("comments",
-            new TableForeignKey({
-                columnNames: ["user_id"],
-                referencedColumnNames: ["id"],
-                referencedTableName: "users",
-                onDelete: "CASCADE"
-            })
+        await queryRunner.createForeignKeys("comments",
+            [
+                new TableForeignKey({
+                    columnNames: ["user_id"],
+                    referencedColumnNames: ["id"],
+                    referencedTableName: "users",
+                    onDelete: "CASCADE"
+                }),
+                new TableForeignKey({
+                    columnNames: ["task_id"],
+                    referencedColumnNames: ["id"],
+                    referencedTableName: "tasks",
+                    onDelete: "CASCADE"
+                })
+            ]
         )
     }
 
@@ -43,6 +56,7 @@ export class CreateCommentsTable1761588355161 implements MigrationInterface {
         if (table) {
             await queryRunner.dropForeignKeys("comments", table.foreignKeys)
             await queryRunner.dropColumn("comments", "user_id")
+            await queryRunner.dropColumn("comments", "task_id")
             await queryRunner.dropTable("comments")
         }
     }
