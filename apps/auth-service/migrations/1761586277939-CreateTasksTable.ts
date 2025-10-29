@@ -38,13 +38,13 @@ export class CreateTasksTable1761586277939 implements MigrationInterface {
                         name: "priority",
                         type: "varchar",
                         isNullable: false,
-                        default: "LOW"
+                        default: "'LOW'"
                     },
                     {
                         name: "status",
                         type: "varchar",
                         isNullable: false,
-                        default: "TODO"
+                        default: "'TODO'"
                     }
                 ]
             })

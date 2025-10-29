@@ -28,7 +28,7 @@ export class CreateLogTable1761589910035 implements MigrationInterface {
                         name: "object_action",
                         type: "varchar",
                         isNullable: false,
-                        default: "EDITED"
+                        default: "'CREATE'"
                     },
                     {
                         name: "object_type",
