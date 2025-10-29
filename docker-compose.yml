@@ -1,45 +1,43 @@
-version: '3.8'
-
 services:
   # Frontend React Application
-  web:
-    container_name: web
-    build:
-      context: .
-      dockerfile: ./apps/web/Dockerfile
-      target: development
-    ports:
-      - '3000:3000'
-    environment:
-      - NODE_ENV=development
-    networks:
-      - challenge-network
-    command: npm run dev -- --host 0.0.0.0
+  # web:
+  #   container_name: web
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/web/Dockerfile
+  #     target: development
+  #   ports:
+  #     - '3000:3000'
+  #   environment:
+  #     - NODE_ENV=development
+  #   networks:
+  #     - challenge-network
+  #   command: npm run dev -- --host 0.0.0.0
 
   # API Gateway
-  api-gateway:
-    container_name: api-gateway
-    build:
-      context: .
-      dockerfile: ./apps/api-gateway/Dockerfile
-      target: development
-    ports:
-      - '3001:3001'
-    volumes:
-      - .:/app
-      - ./packages:/app/packages
-      - /app/node_modules
-      - /app/apps/api-gateway/node_modules
-    environment:
-      - NODE_ENV=development
-      - PORT=3001
-    depends_on:
-      db:
-        condition: service_started
-      rabbitmq:
-        condition: service_started
-    networks:
-      - challenge-network
+  # api-gateway:
+  #   container_name: api-gateway
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/api-gateway/Dockerfile
+  #     target: development
+  #   ports:
+  #     - '3001:3001'
+  #   volumes:
+  #     - .:/app
+  #     - ./packages:/app/packages
+  #     - /app/node_modules
+  #     - /app/apps/api-gateway/node_modules
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=3001
+  #   depends_on:
+  #     db:
+  #       condition: service_started
+  #     rabbitmq:
+  #       condition: service_started
+  #   networks:
+  #     - challenge-network
 
   # Auth Service
   auth-service:
@@ -61,60 +59,60 @@ services:
     depends_on:
       db:
         condition: service_started
-      rabbitmq:
-        condition: service_started
+      # rabbitmq:
+      #   condition: service_started
     networks:
       - challenge-network
 
   # Tasks Service
-  tasks-service:
-    container_name: tasks-service
-    build:
-      context: .
-      dockerfile: ./apps/tasks-service/Dockerfile
-      target: development
-    ports:
-      - '3003:3003'
-    volumes:
-      - .:/app
-      - ./packages:/app/packages
-      - /app/node_modules
-      - /app/apps/tasks-service/node_modules
-    environment:
-      - NODE_ENV=development
-      - PORT=3003
-    depends_on:
-      db:
-        condition: service_started
-      rabbitmq:
-        condition: service_started
-    networks:
-      - challenge-network
+  # tasks-service:
+  #   container_name: tasks-service
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/tasks-service/Dockerfile
+  #     target: development
+  #   ports:
+  #     - '3003:3003'
+  #   volumes:
+  #     - .:/app
+  #     - ./packages:/app/packages
+  #     - /app/node_modules
+  #     - /app/apps/tasks-service/node_modules
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=3003
+  #   depends_on:
+  #     db:
+  #       condition: service_started
+  #     rabbitmq:
+  #       condition: service_started
+  #   networks:
+  #     - challenge-network
 
   # Notifications Service
-  notifications-service:
-    container_name: notifications-service
-    build:
-      context: .
-      dockerfile: ./apps/notifications-service/Dockerfile
-      target: development
-    ports:
-      - '3004:3004'
-    volumes:
-      - .:/app
-      - ./packages:/app/packages
-      - /app/node_modules
-      - /app/apps/notifications-service/node_modules
-    environment:
-      - NODE_ENV=development
-      - PORT=3004
-    depends_on:
-      db:
-        condition: service_started
-      rabbitmq:
-        condition: service_started
-    networks:
-      - challenge-network
+  # notifications-service:
+  #   container_name: notifications-service
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/notifications-service/Dockerfile
+  #     target: development
+  #   ports:
+  #     - '3004:3004'
+  #   volumes:
+  #     - .:/app
+  #     - ./packages:/app/packages
+  #     - /app/node_modules
+  #     - /app/apps/notifications-service/node_modules
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=300
+  #   depends_on:
+  #     db:
+  #       condition: service_started
+  #     rabbitmq:
+  #       condition: service_started
+  #   networks:
+  #     - challenge-network
 
   # Postgres Database
   db:
@@ -130,24 +128,26 @@ services:
       - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_USER: ${DB_USER}
+      POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_DB: ${DB_NAME}
 
+  # to access database: sudo docker-compose exec db psql -U DB_USERNAME -d DB_NAME
+
   # RabbitMQ
-  rabbitmq:
-    image: rabbitmq:3.13-management-alpine
-    container_name: rabbitmq
-    attach: false
-    restart: always
-    ports:
-      - '5672:5672'
-      - '15672:15672'
-    networks:
-      - challenge-network
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
-    volumes: ['rabbitmq_data:/var/lib/rabbitmq']
+  # rabbitmq:
+  #   image: rabbitmq:3.13-management-alpine
+  #   container_name: rabbitmq
+  #   attach: false
+  #   restart: always
+  #   ports:
+  #     - '5672:5672'
+  #     - '15672:15672'
+  #   networks:
+  #     - challenge-network
+  #   environment:
+  #     RABBITMQ_DEFAULT_USER: admin
+  #     RABBITMQ_DEFAULT_PASS: admin
+  #   volumes: ['rabbitmq_data:/var/lib/rabbitmq']
 
 volumes:
   postgres_data:
